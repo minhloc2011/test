@@ -4,13 +4,13 @@ namespace App\Models;
 
 abstract class Model
 {
-	protected $model;
+    protected $model;
 
     /**
      * Model constructor.
      */
     public function __construct()
-	{
-		$this->model = Database::getInstance()->getConnection();
-	}
+    {
+        $this->model = Database::getInstance()->getConnection();
+    }
 }
