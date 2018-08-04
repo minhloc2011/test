@@ -1,4 +1,5 @@
 <a href="/create" class="btn btn-primary">Add New Work</a>
+
 <table class="table table-striped" style="margin-top: 20px;">
     <thead>
     <tr>
@@ -22,7 +23,7 @@
             <td><?php echo $todo['status'] ?></td>
             <td>
                 <a href="/edit/<?php echo $todo['id'] ?>" class="btn btn-info">Edit</a>
-                <a href="" class="btn btn-danger">Delete</a>
+                <a href="/delete/<?php echo $todo['id'] ?>" class="btn btn-danger">Delete</a>
             </td>
         </tr>
     <?php

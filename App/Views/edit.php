@@ -1,15 +1,6 @@
 <div class="col-md-8 offset-md-3">
     <a href="/" class="btn btn-success">Back</a>
     <?php
-    if (isset($status)) {
-        if (empty($status)) {
-            ?>
-            <div class="alert alert-danger" role="alert" style="margin-top: 10px">
-                Oops, something was wrong!
-            </div>
-            <?php
-        }
-    }
     if (isset($message)) {
         ?>
         <div class="alert alert-info" role="alert" style="margin-top: 10px">

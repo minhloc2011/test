@@ -88,4 +88,24 @@ class TodoList extends Model
         }
         return false;
     }
+
+    /**
+     * Delete row by id
+     *
+     * @param int $id Todolist id
+     *
+     * @return bool
+     */
+    public function deleteById($id)
+    {
+        $sql = "DELETE FROM todolist WHERE id = ?";
+        if ($stmt = $this->model->prepare($sql))
+        {
+            $stmt->bind_param("i",$id);
+            $stmt->execute();
+            $stmt->close();
+            return true;
+        }
+        return false;
+    }
 }
