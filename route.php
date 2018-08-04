@@ -14,4 +14,4 @@ if ($url == '/') {
 
 $controller = new \App\Controllers\TodoListController();
 
-call_user_func_array(array($controller, $action), $params);
+call_user_func_array([$controller, $action], $params);
