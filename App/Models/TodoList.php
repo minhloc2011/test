@@ -15,7 +15,7 @@ class TodoList extends Model
      */
     public function getAll()
     {
-        $sqlQuery = "SELECT * from todolist ORDER BY id";
+        $sqlQuery = "SELECT * from todolist WHERE deleted_at IS NULL ORDER BY id";
         $data = $this->model->query($sqlQuery);
 
         return mysqli_fetch_all($data, MYSQLI_ASSOC);
@@ -98,10 +98,11 @@ class TodoList extends Model
      */
     public function deleteById($id)
     {
-        $sql = "DELETE FROM todolist WHERE id = ?";
+        $deleted_at = date('Y-m-d H:i:s');
+        $sql = "UPDATE todolist SET deleted_at = ? WHERE id = ?";
         if ($stmt = $this->model->prepare($sql))
         {
-            $stmt->bind_param("i",$id);
+            $stmt->bind_param("si",$deleted_at, $id);
             $stmt->execute();
             $stmt->close();
             return true;
