@@ -7,7 +7,7 @@ use App\Models\TodoList;
 class TodoListController extends Controller
 {
     /**
-     * Get list all todo list resource
+     * Get list all resources
      *
      * @return mixed
      */
@@ -50,5 +50,40 @@ class TodoListController extends Controller
                 break;
         }
         return $string;
+    }
+
+    /**
+     * Create a work or store in db
+     *
+     * @return mixed
+     */
+    public function create()
+    {
+        if (isset($_POST['name']) &&
+            isset($_POST['start']) &&
+            isset($_POST['end']) &&
+            isset($_POST['statusId']))
+        {
+            if (!in_array($_POST['statusId'], [TodoList::PLANNING, TodoList::DOING, TodoList::COMPLETE]) && empty($_POST['name']))
+            {
+                $v['message'] = 'The Work Name field and Status field are required!';
+                $this->set($v);
+                $this->render('create');
+                exit();
+            }
+
+            $data = [
+                'name'       => $_POST['name'],
+                'start_date' => $_POST['start'],
+                'end_date'   => $_POST['end'],
+                'status'     => $_POST['statusId'],
+            ];
+            $todoList = new TodoList();
+            $v['status'] = $todoList->insert($data);
+
+
+            $this->set($v);
+        }
+        $this->render('create');
     }
 }
