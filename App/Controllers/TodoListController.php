@@ -143,4 +143,25 @@ class TodoListController extends Controller
 
         header("Location:".APP_URL);
     }
+
+    /**
+     * Response json resource to calendar
+     *
+     * @return object
+     */
+    public function calendar()
+    {
+        $todoList = new TodoList();
+        $data = $todoList->getAll();
+        $calendar = [];
+
+        foreach ($data as $key => $value) {
+            $calendar[$key]['title'] = $value['work_name'];
+            $calendar[$key]['start'] = $value['start_date'];
+            $calendar[$key]['end'] = $value['end_date'];
+        }
+
+        header('Content-type: application/json');
+        echo json_encode($calendar);
+    }
 }

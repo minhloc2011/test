@@ -27,6 +27,7 @@ class Controller
      */
     public function set($var)
     {
+
         $this->var = array_merge($this->var, $var);
     }
 
@@ -39,6 +40,9 @@ class Controller
      */
     public function render($fileName)
     {
+        $v['appURL'] = APP_URL;
+        $this->set($v);
+
         extract($this->var);
         ob_start();
         require VIEW . $fileName. '.php';
