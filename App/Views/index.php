@@ -21,7 +21,7 @@
             <td><?php echo $todo['end_date'] ?></td>
             <td><?php echo $todo['status'] ?></td>
             <td>
-                <a href="/edit/1" class="btn btn-info">Edit</a>
+                <a href="/edit/<?php echo $todo['id'] ?>" class="btn btn-info">Edit</a>
                 <a href="" class="btn btn-danger">Delete</a>
             </td>
         </tr>

@@ -42,7 +42,7 @@ class TodoListController extends Controller
             case TodoList::DOING:
                 $string = "Doing";
                 break;
-            case TodoList::COMPLETED:
+            case TodoList::COMPLETE:
                 $string = "Complete";
                 break;
             default:
@@ -53,7 +53,7 @@ class TodoListController extends Controller
     }
 
     /**
-     * Create a work or store in db
+     * Create and store resource
      *
      * @return mixed
      */
@@ -64,7 +64,7 @@ class TodoListController extends Controller
             isset($_POST['end']) &&
             isset($_POST['statusId']))
         {
-            if (!in_array($_POST['statusId'], [TodoList::PLANNING, TodoList::DOING, TodoList::COMPLETE]) && empty($_POST['name']))
+            if (!in_array($_POST['statusId'], [TodoList::PLANNING, TodoList::DOING, TodoList::COMPLETE]) || empty($_POST['name']))
             {
                 $v['message'] = 'The Work Name field and Status field are required!';
                 $this->set($v);
@@ -85,5 +85,47 @@ class TodoListController extends Controller
             $this->set($v);
         }
         $this->render('create');
+    }
+
+    /**
+     * Edit resource
+     *
+     * @param int $id Resource id
+     *
+     * @return mixed
+     */
+    public function edit($id)
+    {
+        if (isset($_POST['name']) &&
+            isset($_POST['start']) &&
+            isset($_POST['end']) &&
+            isset($_POST['statusId']))
+        {
+            if (!in_array($_POST['statusId'], [TodoList::PLANNING, TodoList::DOING, TodoList::COMPLETE]) || empty($_POST['name']))
+            {
+                $todoList = new TodoList();
+                $v['row'] = $todoList->getById($id);
+                $v['message'] = 'The Work Name field and Status field are required!';
+                $this->set($v);
+                $this->render('edit');
+                exit();
+            }
+
+            $data = [
+                'name'       => $_POST['name'],
+                'start_date' => $_POST['start'],
+                'end_date'   => $_POST['end'],
+                'status'     => $_POST['statusId'],
+            ];
+            $todoList = new TodoList();
+            $v['status'] = $todoList->updateById($data, $id);
+            $v['message']= 'Update work is success!';
+        }
+
+        $todoList = new TodoList();
+        $v['row'] = $todoList->getById($id);
+
+        $this->set($v);
+        $this->render('edit');
     }
 }
