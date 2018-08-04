@@ -119,7 +119,7 @@ class TodoListController extends Controller
             ];
             $todoList = new TodoList();
             $v['status'] = $todoList->updateById($data, $id);
-            $v['message']= 'Update work is success!';
+            $v['message']= $v['status'] ? 'Update work is success!' : 'Update work is failed.';
         }
 
         $todoList = new TodoList();
@@ -127,5 +127,20 @@ class TodoListController extends Controller
 
         $this->set($v);
         $this->render('edit');
+    }
+
+    /**
+     * Delete resource
+     *
+     * @param int $id Resource id
+     *
+     * @return mixed
+     */
+    public function delete($id)
+    {
+        $todoList = new TodoList();
+        $todoList->deleteById($id);
+
+        header("Location:".APP_URL);
     }
 }
