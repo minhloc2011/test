@@ -27,7 +27,6 @@ class Controller
      */
     public function set($var)
     {
-
         $this->var = array_merge($this->var, $var);
     }
 
